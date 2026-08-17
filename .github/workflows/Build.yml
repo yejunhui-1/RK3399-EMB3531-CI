@@ -61,7 +61,7 @@ jobs:
         root-reserve-mb: 1024
 
     - name: 准备完成
-      uses: actions/checkout@main
+      uses: actions/checkout@v4
 
     - name: 创建工作目录
       run: |
@@ -192,7 +192,7 @@ jobs:
       run: df -hT
 
     - name: 上传 bin 文件夹
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.FILE_DATE }}
@@ -208,7 +208,7 @@ jobs:
         echo "status=success" >> ${GITHUB_OUTPUT}
 
     - name: 上传固件目录
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.FILE_DATE }}
@@ -263,6 +263,8 @@ jobs:
     - name: 删除自动发布的旧固件
       uses: dev-drprasad/delete-older-releases@v0.3.3
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
       with:
         keep_latest: 60
         delete_tags: true
