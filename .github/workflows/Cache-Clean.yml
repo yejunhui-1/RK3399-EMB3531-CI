@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: MIT
+#
+# 缓存清理：定期清理 GitHub Actions 缓存
+# 参考 OpenWRT-CI 的 Cache-Clean.yml
+name: Cache-Clean
+
+on:
+  #自动清理：每周一早上4点
+  schedule:
+    - cron: 0 20 * * 0
+  #手动清理
+  workflow_dispatch:
+
+permissions: write-all
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Cache Clean
+        run: gh cache delete --all

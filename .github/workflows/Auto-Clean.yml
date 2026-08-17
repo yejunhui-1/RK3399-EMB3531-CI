@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: MIT
+#
+# 自动清理：定期清理旧 Releases 与运行记录
+# 参考 OpenWRT-CI 的 Auto-Clean.yml
+name: Auto-Clean
+
+on:
+  #自动清理：北京时间每天早上5点
+  schedule:
+    - cron: 0 21 * * *
+  #手动清理
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  auto_clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old Releases and Workflows
+        uses: ophub/delete-releases-workflows@main
+        with:
+          gh_token: ${{secrets.GITHUB_TOKEN}}
+          delete_releases: true
+          releases_keep_latest: 5
+          delete_tags: true
+          delete_workflows: true
+          workflows_keep_day: 20

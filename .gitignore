@@ -1,0 +1,10 @@
+# 私有扩展配置（仅本地/fork私有仓库使用）
+Config/PRIVATE.txt
+
+# 工作目录
+workdir/
+openwrt/
+
+# 系统文件
+.DS_Store
+*.log
