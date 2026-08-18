@@ -45,7 +45,7 @@ jobs:
       - name: Git 提交更新的配置文件
         run: |
           git config --global user.name 'GitHub Action'
-          git config --global user_email 'github-actions[bot]@github.com'
+          git config --global user.email 'github-actions[bot]@github.com'
           git add ./armv8/.config ./armv8/feeds.conf
           # 检测有无改动，无改动直接跳过提交
           if git diff --staged --quiet; then
